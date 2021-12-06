@@ -6,6 +6,7 @@ import com.spring.shop.core.entities.Profile;
 import com.spring.shop.entities.dtos.DatabaseSeederDto;
 import com.spring.shop.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,96 @@ public class DbSeederController {
     private final OrderNoticeService orderNoticeService;
     private final SettingService settingService;
     private final Faker faker = new Faker(new Locale("tr"));
+
+    @Value("${aws.s3.bucket.public.address}")
+    private String bucketAddress;
+
+    String[] productPics = {
+            "09dd86717727c51809019d98501a1.png",
+            "09dd86717727c51809019d98501a2.png",
+            "09dd86717727c51809019d98501a3.png",
+            "09dd86717727c51809019d98501a4.png",
+            "0fc37e18f99b0c199ea7dd469898f57d1195.png",
+            "0fc37e18f99b0c199ea7dd469898f57d1197.png",
+            "0fc37e18f99b0c199ea7dd469898f57d1279.png",
+            "0fc37e18f99b0c199ea7dd469898f57d7164.png",
+            "124a0743e639b0800a978a7aa5b0ae191.png",
+            "124a0743e639b0800a978a7aa5b0ae192.png",
+            "124a0743e639b0800a978a7aa5b0ae193.png",
+            "124a0743e639b0800a978a7aa5b0ae196.png",
+            "14611c57d906dbb1ee595c877489d3c81000.png",
+            "14611c57d906dbb1ee595c877489d3c82917.png",
+            "15feb2d8f3259ff9b3beef74cfcbb4901.png",
+            "15feb2d8f3259ff9b3beef74cfcbb4902.png",
+            "15feb2d8f3259ff9b3beef74cfcbb4903.png",
+            "15feb2d8f3259ff9b3beef74cfcbb4904.png",
+            "18ae2d6b36b336deb22c89cf37628e5d4407.png",
+            "18ae2d6b36b336deb22c89cf37628e5d7346.png",
+            "18ae2d6b36b336deb22c89cf37628e5d8666.png",
+            "18ae2d6b36b336deb22c89cf37628e5d9958.png",
+            "28937a01424f2393db5c102110bcff023751.png",
+            "28937a01424f2393db5c102110bcff026505.png",
+            "3380841b44793b60fddec584b2493dbc1250.png",
+            "3380841b44793b60fddec584b2493dbc2323.png",
+            "3380841b44793b60fddec584b2493dbc3140.png",
+            "3380841b44793b60fddec584b2493dbc4002.png",
+            "33ce21dd1a861bcded330e076ba6d53600.png",
+            "33ce21dd1a861bcded330e076ba6d5361071.png",
+            "33ce21dd1a861bcded330e076ba6d5367148.png",
+            "33ce21dd1a861bcded330e076ba6d5367199.png",
+            "35e0c413a964c289405c2cf095b0fb661.png",
+            "35e0c413a964c289405c2cf095b0fb662.png",
+            "35e0c413a964c289405c2cf095b0fb663.png",
+            "35e0c413a964c289405c2cf095b0fb664.png",
+            "38054d19915ae638542bceb6e79dca2c2100.png",
+            "38054d19915ae638542bceb6e79dca2c2644.png",
+            "38054d19915ae638542bceb6e79dca2c3773.png",
+            "38054d19915ae638542bceb6e79dca2c3786.png",
+            "4c0086dc40e6f9e81a8d4e64bcb71bd5000.png",
+            "4c0086dc40e6f9e81a8d4e64bcb71bd5425.png",
+            "4c0086dc40e6f9e81a8d4e64bcb71bd5998.png",
+            "4c0086dc40e6f9e81a8d4e64bcb71bd5999.png",
+            "5a43fd84079ee1bda117e535f76eeee1.png",
+            "5a43fd84079ee1bda117e535f76eeee2.png",
+            "5a43fd84079ee1bda117e535f76eeee3.png",
+            "5a43fd84079ee1bda117e535f76eeee4.png",
+            "5c9ae70710a57bf6bf437d0648b17cc1.png",
+            "5c9ae70710a57bf6bf437d0648b17cc2.png",
+            "5c9ae70710a57bf6bf437d0648b17cc3.png",
+            "5c9ae70710a57bf6bf437d0648b17cc4.png",
+            "6d7d200aa7f545da0db6edbb391382a1.png",
+            "6d7d200aa7f545da0db6edbb391382a2.png",
+            "6d7d200aa7f545da0db6edbb391382a3.png",
+            "6d7d200aa7f545da0db6edbb391382a64239.png",
+            "88842b8c9337f8aa477c89bf5b8fed211111.png",
+            "88842b8c9337f8aa477c89bf5b8fed221111.png",
+            "88842b8c9337f8aa477c89bf5b8fed233333.png",
+            "88842b8c9337f8aa477c89bf5b8fed244444.png",
+            "8ffa2d9b8eb89724e0fc177503fa1.png",
+            "8ffa2d9b8eb89724e0fc177503fa2.png",
+            "8ffa2d9b8eb89724e0fc177503fa3.png",
+            "8ffa2d9b8eb89724e0fc177503fa4.png",
+            "976bb87e1613c4e2e715bf28be977beb2462.png",
+            "976bb87e1613c4e2e715bf28be977beb5215.png",
+            "976bb87e1613c4e2e715bf28be977beb8789.png",
+            "976bb87e1613c4e2e715bf28be977beb9999.png",
+            "97e82a6f71d3d8f29ad50cbe4a9b82521007.png",
+            "97e82a6f71d3d8f29ad50cbe4a9b82522400.png",
+            "97e82a6f71d3d8f29ad50cbe4a9b82522646.png",
+            "97e82a6f71d3d8f29ad50cbe4a9b82529999.png",
+            "9e33bcb75cf51a8a87a3f89e5612615d1.png",
+            "9e33bcb75cf51a8a87a3f89e5612615d2.png",
+            "9e33bcb75cf51a8a87a3f89e5612615d3.png",
+            "9e33bcb75cf51a8a87a3f89e5612615d4.png",
+            "c4b96945ebbd0be76773fb10cf74d55e7370.png",
+            "c4b96945ebbd0be76773fb10cf74d55e8229.png",
+            "c4b96945ebbd0be76773fb10cf74d55e9429.png",
+            "c4b96945ebbd0be76773fb10cf74d9999999.png",
+            "ca44691e8a6e97e7fc5c52d3cce3f26d141.png",
+            "ca44691e8a6e97e7fc5c52d3cce3f26d7093.png",
+            "efc09ea225942fd3802c3000f1215f151018.png",
+            "efc09ea225942fd3802c3000f1215f158909.png"
+    };
 
     @Autowired
     public DbSeederController(PlatformUserService platformUserService, ProductService productService, CategoryService categoryService, ProductPhotoService productPhotoService, ProductVariantService productVariantService, ProductCommentService productCommentService, AddressService addressService, AdminUserService adminUserService, ProfileService profileService, AgreementsAndStringsService agreementsAndStringsService, BankAccountService bankAccountService, BannerService bannerService, CargoCompanyService cargoCompanyService, FaqService faqService, IyzicoService iyzicoService, OrderNoticeService orderNoticeService, SettingService settingService) {
@@ -247,19 +338,11 @@ public class DbSeederController {
 
     public List<ProductPhoto> getProductPhotos(){
         List<ProductPhoto> productPhotos = new ArrayList<>();
-        File folder = new File("/home/ubuntu/workspace/shop/src/main/resources/static/img/product/");
-        File[] listOfFiles = folder.listFiles();
 
-        assert listOfFiles != null;
-        for (File file : listOfFiles){
-            String path = file.getPath().replace('\\', '/');
-
-            String filename = path.split("src/main/resources/static/img/product/")[1];
+        for (String path:this.productPics) {
             ProductPhoto productPhoto = new ProductPhoto();
-
-            productPhoto.setPath(filename);
+            productPhoto.setPath(this.bucketAddress+path);
             productPhoto.setDeleted(false);
-
             productPhotos.add(productPhoto);
         }
         return productPhotos;
