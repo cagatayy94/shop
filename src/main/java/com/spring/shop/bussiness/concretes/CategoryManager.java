@@ -5,6 +5,8 @@ import com.spring.shop.dataAccess.abstracts.CategoryDao;
 import com.spring.shop.entities.Category;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CategoryManager implements CategoryService {
 
@@ -22,5 +24,20 @@ public class CategoryManager implements CategoryService {
     @Override
     public Category getRandom() {
         return this.categoryDao.getRandom();
+    }
+
+    @Override
+    public List<Category> findAll() {
+        return this.categoryDao.findAllByOrderByIdDesc();
+    }
+
+    @Override
+    public Category getById(Integer id) {
+        return this.categoryDao.findById(id).get();
+    }
+
+    @Override
+    public void delete(Integer id) {
+        this.categoryDao.deleteById(id);
     }
 }

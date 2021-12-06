@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        // We don't need CSRF for this example
+        // We don't need CSRF for this part
         httpSecurity.csrf().disable()
                 // dont authenticate this particular request
                 .authorizeRequests().
@@ -70,7 +70,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/product/**",
                         "/faker/seed-db",
                         "/register",
-                        "/approve"
+                        "/approve",
+                        "/category/**",
+                        "/order-notice/**"
+
                         ).permitAll().
                 // all other requests need to be authenticated
                         anyRequest().authenticated().and().
