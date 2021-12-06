@@ -15,6 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/platform-users/")
 public class PlatformUserController {

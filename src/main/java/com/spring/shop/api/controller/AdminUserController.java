@@ -5,6 +5,7 @@ import com.spring.shop.core.business.abstracts.UserService;
 import com.spring.shop.core.util.JwtTokenUtil;
 import com.spring.shop.entities.AdminUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/v1/admin-users/")
 public class AdminUserController {

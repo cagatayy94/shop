@@ -15,6 +15,7 @@ import java.io.File;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/v1/db/seeder/")
 public class DbSeederController {

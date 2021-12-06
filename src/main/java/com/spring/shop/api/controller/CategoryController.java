@@ -8,6 +8,7 @@ import com.spring.shop.entities.Category;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/v1/categories/")
 public class CategoryController {
