@@ -9,7 +9,7 @@ import com.spring.shop.entities.Category;
 import java.util.List;
 
 @RestController
-@RequestMapping("/category/")
+@RequestMapping("/v1/categories/")
 public class CategoryController {
 
     private final CategoryService categoryService;

@@ -3,6 +3,7 @@ package com.spring.shop.api.controller;
 import com.github.javafaker.Faker;
 import com.spring.shop.bussiness.abstracts.*;
 import com.spring.shop.core.entities.Profile;
+import com.spring.shop.entities.dtos.DatabaseSeederDto;
 import com.spring.shop.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,8 +15,8 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 @RestController
-@RequestMapping("/faker/")
-public class FakerController {
+@RequestMapping("/v1/db/seeder/")
+public class DbSeederController {
     private final PlatformUserService platformUserService;
     private final ProductService productService;
     private final CategoryService categoryService;
@@ -36,7 +37,7 @@ public class FakerController {
     private final Faker faker = new Faker(new Locale("tr"));
 
     @Autowired
-    public FakerController(PlatformUserService platformUserService, ProductService productService, CategoryService categoryService, ProductPhotoService productPhotoService, ProductVariantService productVariantService, ProductCommentService productCommentService, AddressService addressService, AdminUserService adminUserService, ProfileService profileService, AgreementsAndStringsService agreementsAndStringsService, BankAccountService bankAccountService, BannerService bannerService, CargoCompanyService cargoCompanyService, FaqService faqService, IyzicoService iyzicoService, OrderNoticeService orderNoticeService, SettingService settingService) {
+    public DbSeederController(PlatformUserService platformUserService, ProductService productService, CategoryService categoryService, ProductPhotoService productPhotoService, ProductVariantService productVariantService, ProductCommentService productCommentService, AddressService addressService, AdminUserService adminUserService, ProfileService profileService, AgreementsAndStringsService agreementsAndStringsService, BankAccountService bankAccountService, BannerService bannerService, CargoCompanyService cargoCompanyService, FaqService faqService, IyzicoService iyzicoService, OrderNoticeService orderNoticeService, SettingService settingService) {
         this.platformUserService = platformUserService;
         this.productService = productService;
         this.categoryService = categoryService;
@@ -56,12 +57,12 @@ public class FakerController {
         this.settingService = settingService;
     }
 
-    //@PostMapping("seed-db")
-    public void seedTheDatabase() {
-        int numberOfCategoryToBeCreated = 25;
-        int numberOfUserToBeCreated = 100;
-        int numberOfProductsToBeCreated = 250;
-        int numberOfOrderNoticeToBeCreated = 55;
+    @PostMapping("seed")
+    public void seedTheDatabase(@RequestBody DatabaseSeederDto databaseSeederDto) {
+        int numberOfCategoryToBeCreated = databaseSeederDto.getNumberOfCategoryToBeCreated();
+        int numberOfUserToBeCreated = databaseSeederDto.getNumberOfUserToBeCreated();
+        int numberOfProductsToBeCreated = databaseSeederDto.getNumberOfProductsToBeCreated();
+        int numberOfOrderNoticeToBeCreated = databaseSeederDto.getNumberOfOrderNoticeToBeCreated();
 
         this.createCategory(numberOfCategoryToBeCreated);
         this.createUser(numberOfUserToBeCreated);
@@ -90,21 +91,11 @@ public class FakerController {
             product.setView(0);
 
             //select random elements on your category list and add them your product
-            Category category1 = new Category();
-            Category category2 = new Category();
-            Category category3 = new Category();
-            Category category4 = new Category();
-
-            category1 = this.categoryService.getRandom();
-            category2 = this.categoryService.getRandom();
-            category3 = this.categoryService.getRandom();
-            category4 = this.categoryService.getRandom();
-
             List<Category> categories = new ArrayList<>();
-            categories.add(category1);
-            categories.add(category2);
-            categories.add(category3);
-            categories.add(category4);
+
+            for (int j = 0; j < 4; j++) {
+                categories.add(this.categoryService.getRandom());
+            }
 
             product.setCategories(categories);
 
@@ -278,10 +269,10 @@ public class FakerController {
         //add photos
         List<ProductPhoto> allProductPhotos = this.getProductPhotos();
 
-        ProductPhoto productPhoto1 = new ProductPhoto();
-        ProductPhoto productPhoto2 = new ProductPhoto();
-        ProductPhoto productPhoto3 = new ProductPhoto();
-        ProductPhoto productPhoto4 = new ProductPhoto();
+        ProductPhoto productPhoto1;
+        ProductPhoto productPhoto2;
+        ProductPhoto productPhoto3;
+        ProductPhoto productPhoto4;
 
         productPhoto1 = allProductPhotos.get(ThreadLocalRandom.current().nextInt(1,  allProductPhotos.size()));
         productPhoto2 = allProductPhotos.get(ThreadLocalRandom.current().nextInt(1,  allProductPhotos.size()));

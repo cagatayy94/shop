@@ -13,7 +13,7 @@ import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/AdminUser/")
+@RequestMapping("/v1/admin-users/")
 public class AdminUserController {
     private final AdminUserService adminUserService;
     private final HttpServletRequest request;
@@ -26,7 +26,7 @@ public class AdminUserController {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    @GetMapping("getAll")
+    @GetMapping()
     public List<AdminUser> getAll() throws AccessDeniedException {
         this.jwtTokenUtil.authorize(this.request,"adminUser_getAll");
         return adminUserService.getAll();

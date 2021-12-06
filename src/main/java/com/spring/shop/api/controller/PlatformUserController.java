@@ -16,7 +16,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import java.util.List;
 
 @RestController
-@RequestMapping("/PlatformUser/")
+@RequestMapping("/platform-users/")
 public class PlatformUserController {
     private final PlatformUserService platformUserService;
     private final JwtTokenUtil jwtTokenUtil;
