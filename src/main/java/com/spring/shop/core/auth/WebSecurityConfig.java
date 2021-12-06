@@ -66,13 +66,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/webjars/**",
                         "/",
                         "/csrf",
-                        "/products",
-                        "/product/**",
-                        "/faker/seed-db",
+                        "/products/**",
                         "/register",
                         "/approve",
-                        "/category/**",
-                        "/order-notice/**"
+                        "/v1/categories/**",
+                        "/v1/order-notices/**",
+                        "/v1/products/**"
 
                         ).permitAll().
                 // all other requests need to be authenticated
