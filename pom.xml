@@ -81,7 +81,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>shop-app.jar</finalName>
+		<finalName>shop-app</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
